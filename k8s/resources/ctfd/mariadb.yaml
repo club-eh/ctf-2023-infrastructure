@@ -1,0 +1,61 @@
+#@ namespace = "ctfd"
+#@ name = "mariadb"
+#@ category = "ctfd"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: #@ namespace
+  name: #@ name
+  labels:
+    app.kubernetes.io/name: #@ name
+    app.kubernetes.io/part-of: #@ category
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: #@ name
+      app.kubernetes.io/part-of: #@ category
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: #@ name
+        app.kubernetes.io/part-of: #@ category
+    spec:
+      containers:
+      - name: #@ name
+        #! TODO: switch to a non-Ubuntu-based image?
+        image: "docker.io/library/mariadb:10.9"
+        env:
+          - name: MARIADB_RANDOM_ROOT_PASSWORD
+            value: "1"
+          - name: MARIADB_DATABASE
+            value: "ctfd"
+          - name: MARIADB_USER
+            value: "ctfd"
+          - name: MARIADB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ctfd-secrets
+                key: database-password
+        resources:
+          limits:
+            cpu: "1000m"
+            memory: "512Mi"
+          requests:
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: #@ namespace
+  name: #@ name
+  labels:
+    app.kubernetes.io/name: #@ name
+    app.kubernetes.io/part-of: #@ category
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: #@ name
+  ports:
+  - port: 3306

@@ -1,0 +1,104 @@
+#@ load("@ytt:data", "data")
+
+#@ domain = data.values.domain
+#@ registry = "registry." + domain
+
+#@ namespace = "ctfd"
+#@ name = "ctfd"
+#@ category = "ctfd"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: #@ namespace
+  name: #@ name
+  labels:
+    app.kubernetes.io/name: #@ name
+    app.kubernetes.io/part-of: #@ category
+spec:
+  replicas: #@ data.values.replicas.ctfd
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: #@ name
+      app.kubernetes.io/part-of: #@ name
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: #@ name
+        app.kubernetes.io/part-of: #@ name
+    spec:
+      containers:
+      - name: #@ name
+        #!image: "docker.io/ctfd/ctfd:3.5.0"
+        image: #@ registry + "/infra/ctfd:latest"
+        resources:
+          limits:
+            cpu: #@ data.values.ctfd.vcpus
+            memory: "768Mi"
+          requests:
+            cpu: #@ data.values.ctfd.vcpus / 2
+        env:
+          - name: SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: ctfd-secrets
+                key: ctfd-secret-key
+          - name: WORKERS
+            value: #@ str( data.values.ctfd.vcpus * 2 + 1 )
+          #!- name: REDIS_URL
+          #!  value: "redis://127.0.0.1:6379"
+          - name: DATABASE_URL
+            value: "mysql+pymysql://ctfd:{PASSWORD}@mariadb.ctfd/ctfd"
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ctfd-secrets
+                key: database-password
+      - name: redis
+        image: "docker.io/library/redis:7-alpine"
+        resources:
+          limits:
+            cpu: "1000m"
+            memory: "256Mi"
+          requests:
+            cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: #@ namespace
+  name: #@ name
+  labels:
+    app.kubernetes.io/name: #@ name
+    app.kubernetes.io/part-of: #@ category
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: #@ name
+  ports:
+  - port: 80
+    targetPort: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: #@ namespace
+  name: #@ name
+  labels:
+    app.kubernetes.io/name: #@ name
+    app.kubernetes.io/part-of: #@ category
+spec:
+  rules:
+  - host: #@ domain
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: #@ name
+            port: 
+              number: 80

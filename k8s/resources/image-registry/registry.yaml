@@ -1,0 +1,70 @@
+#@ load("@ytt:data", "data")
+
+#@ domain = data.values.domain
+
+#@ namespace = "image-registry"
+#@ name = "registry"
+#@ category = "registry"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: #@ namespace
+  name: #@ name
+  labels:
+    app.kubernetes.io/name: #@ name
+    app.kubernetes.io/part-of: #@ category
+spec:
+  selector:
+    matchLabels:
+      app: #@ name
+  template:
+    metadata:
+      labels:
+        app: #@ name
+    spec:
+      containers:
+      - name: #@ name
+        image: "docker.io/library/registry:2"
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: #@ namespace
+  name: #@ name
+  labels:
+    app.kubernetes.io/name: #@ name
+    app.kubernetes.io/part-of: #@ category
+spec:
+  type: ClusterIP
+  selector:
+    app: #@ name
+  ports:
+  - port: 5000
+---
+#! TODO: actually add authorization to restrict access to container images
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: #@ namespace
+  name: #@ name
+  labels:
+    app.kubernetes.io/name: #@ name
+    app.kubernetes.io/part-of: #@ category
+spec:
+  rules:
+  - host: #@ "registry." + domain
+    http:
+      paths:
+      - path: "/"
+        pathType: Prefix
+        backend:
+          service:
+            name: registry
+            port:
+              number: 5000

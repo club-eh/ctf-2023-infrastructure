@@ -1,0 +1,6 @@
+# Namespace for all monitoring services (logs, metrics, etc.)
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring

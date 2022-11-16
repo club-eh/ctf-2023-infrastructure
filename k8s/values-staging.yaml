@@ -1,0 +1,9 @@
+#@data/values
+---
+domain: "ctf-2023-staging.clubeh.ca"
+
+replicas:
+  ctfd: 2
+
+ctfd:
+  vcpus: 4

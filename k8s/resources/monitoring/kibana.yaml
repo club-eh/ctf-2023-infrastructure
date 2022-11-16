@@ -1,0 +1,23 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:template", "template")
+
+#@ namespace = "monitoring"
+#@ name = "kibana"
+#@ version = "8.4.3"
+#@ category = "logs"
+
+#@ common_metadata = {"namespace": namespace, "name": name}
+#@ common_labels = {"app.kubernetes.io/name": name, "app.kubernetes.io/version": version, "app.kubernetes.io/part-of": category}
+
+---
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  _: #@ template.replace(common_metadata)
+  labels:
+    _: #@ template.replace(common_labels)
+spec:
+  version: #@ version
+  count: 1
+  elasticsearchRef:
+    name: elasticsearch

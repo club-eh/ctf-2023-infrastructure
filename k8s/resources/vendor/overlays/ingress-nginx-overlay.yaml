@@ -1,0 +1,26 @@
+#! Overrides for ingress-nginx.yaml
+
+#@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:template", "template")
+
+
+#@ def resource(apiVersion, kind, name, extra_metadata={}):
+apiVersion: #@ apiVersion
+kind: #@ kind
+metadata:
+  name: #@ name
+  _: #@ template.replace(extra_metadata)
+#@ end
+
+
+#@overlay/match by=overlay.subset(resource("v1", "Service", "ingress-nginx-controller", {"namespace": "ingress-nginx"})), expects=1
+---
+metadata:
+  #@overlay/match missing_ok=True
+  annotations:
+    #@overlay/match missing_ok=True
+    service.beta.kubernetes.io/azure-load-balancer-resource-group: #@ data.values.pips._resource_group
+spec:
+  #@overlay/match missing_ok=True
+  loadBalancerIP: #@ data.values.pips.ingress

@@ -1,0 +1,6 @@
+# Namespace for CTFd and its dependencies (MariaDB and Redis)
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ctfd

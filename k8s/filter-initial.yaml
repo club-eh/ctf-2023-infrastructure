@@ -1,0 +1,10 @@
+#! ytt filter that only keeps `Namespace` and `CustomResourceDefinition` resources
+
+#@ load("@ytt:overlay", "overlay")
+
+
+#@ is_namespace = overlay.subset({"apiVersion": "v1", "kind": "Namespace"})
+#@ is_crd = overlay.subset({"apiVersion": "apiextensions.k8s.io/v1", "kind": "CustomResourceDefinition"})
+
+#@overlay/match by=overlay.not_op(overlay.or_op(is_namespace, is_crd)), expects="0+"
+#@overlay/remove

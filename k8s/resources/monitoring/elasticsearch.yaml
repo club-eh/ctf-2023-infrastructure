@@ -1,0 +1,38 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:template", "template")
+
+#@ namespace = "monitoring"
+#@ name = "elasticsearch"
+#@ version = "8.4.3"
+#@ category = "logs"
+
+#@ common_metadata = {"namespace": namespace, "name": name}
+#@ common_labels = {"app.kubernetes.io/name": name, "app.kubernetes.io/version": version, "app.kubernetes.io/part-of": category}
+
+---
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  _: #@ template.replace(common_metadata)
+  labels:
+    _: #@ template.replace(common_labels)
+spec:
+  version: #@ version
+  auth:
+    fileRealm:
+      - secretName: elasticsearch-user-fluentbit
+  nodeSets:
+    - name: primary
+      count: 1
+      podTemplate:
+        metadata:
+          labels:
+            _: #@ template.replace(common_labels)
+        spec:
+          #! https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-virtual-memory.html
+          #!initContainers:
+          #!  - name: sysctl
+          #!    securityContext:
+          #!      privileged: true
+          #!      runAsUser: 0
+          #!    command: ["sh", "-c", "sysctl -w vm.max_map_count=262144"]

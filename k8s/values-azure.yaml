@@ -1,0 +1,14 @@
+#@data/values
+---
+domain: "ctf-2023.clubeh.ca"
+
+replicas:
+  ctfd: 1
+
+ctfd:
+  vcpus: 4
+
+pips:
+  _resource_group: "Capstone"
+  ingress: "20.220.138.140"
+  challenges: "20.220.138.78"

@@ -1,0 +1,8 @@
+# Disables auto-mounting the default Service Account token into all pods.
+# Note: by default, this account doesn't actually have any permissions anyways.
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: default
+automountServiceAccountToken: false

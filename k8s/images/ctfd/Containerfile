@@ -1,0 +1,44 @@
+## Define shared base image
+FROM docker.io/library/python:3.10-slim as base
+
+# activate venv
+ENV PATH="/venv/bin:$PATH"
+
+
+## Build virtualenv containing app dependencies
+FROM base as build
+
+# create venv
+RUN python -m venv /venv
+
+# install Python dependencies
+COPY ./ctfd/requirements.txt /app/
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+
+## Build final container image
+FROM base
+
+# import built venv
+COPY --from=build /venv /venv
+
+# install CTFd codebase
+COPY ./ctfd/ /app/
+
+# create unprivilged user
+RUN adduser \
+	--disabled-login \
+	-u 1001 \
+	--gecos "" \
+	--shell /bin/bash \
+	ctfd \
+	&& chown -R 1001:1001 /app
+
+USER 1001
+
+# expose CTFd port
+EXPOSE 8000
+
+# install entrypoint
+COPY --chmod=755 ./entrypoint.sh /entrypoint.sh
+CMD ["/entrypoint.sh"]

@@ -1,0 +1,22 @@
+# Creates a new SA with broad superuser permissions, solely for manual use with the Kubernetes Dashboard
+# TODO: maybe figure out a better alternative? otherwise figure out how to best secure this
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: kubernetes-dashboard
+  name: admin-user
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: admin-user
+    namespace: kubernetes-dashboard
