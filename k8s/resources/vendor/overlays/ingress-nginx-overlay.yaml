@@ -32,3 +32,11 @@ spec:
         - args:
           #@overlay/append
           - --default-ssl-certificate=default/le-ctf-2023-keypair
+
+
+#@overlay/match by=overlay.subset(resource("networking.k8s.io/v1", "IngressClass", "nginx")), expects=1
+---
+metadata:
+  #@overlay/match missing_ok=True
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: "true"
