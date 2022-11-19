@@ -48,8 +48,8 @@ spec:
                 key: ctfd-secret-key
           - name: WORKERS
             value: #@ str( data.values.ctfd.vcpus * 2 + 1 )
-          #!- name: REDIS_URL
-          #!  value: "redis://127.0.0.1:6379"
+          - name: REDIS_URL
+            value: "redis://redis:6379"
           - name: DATABASE_URL
             value: "mysql+pymysql://ctfd:{PASSWORD}@mariadb.ctfd/ctfd"
           - name: DATABASE_PASSWORD
@@ -57,14 +57,6 @@ spec:
               secretKeyRef:
                 name: ctfd-secrets
                 key: database-password
-      - name: redis
-        image: "docker.io/library/redis:7-alpine"
-        resources:
-          limits:
-            cpu: "1000m"
-            memory: "256Mi"
-          requests:
-            cpu: "250m"
 ---
 apiVersion: v1
 kind: Service

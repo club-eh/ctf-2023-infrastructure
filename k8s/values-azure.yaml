@@ -6,7 +6,7 @@ replicas:
   ctfd: 1
 
 ctfd:
-  vcpus: 4
+  vcpus: 1
 
 pips:
   _resource_group: "Capstone"
