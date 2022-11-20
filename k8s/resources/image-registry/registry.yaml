@@ -7,21 +7,6 @@
 #@ category = "registry"
 
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  namespace: #@ namespace
-  name: #@ name + "-headless"
-  labels:
-    app.kubernetes.io/name: #@ name
-    app.kubernetes.io/part-of: #@ category
-spec:
-  clusterIP: None
-  selector:
-    app: #@ name
-  ports:
-  - port: 5000
----
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -32,7 +17,7 @@ metadata:
     app.kubernetes.io/part-of: #@ category
 spec:
   replicas: 1
-  serviceName: #@ name + "-headless"
+  serviceName: #@ name
   selector:
     matchLabels:
       app: #@ name
