@@ -32,6 +32,17 @@ gen_rand_file_b64() {
 	gen_rand_file_b64 "database-password" 64
 )
 
+# generate registry secrets
+(
+	mkdir -p registry/
+	cd registry/
+
+	# generate admin password
+	gen_rand_file_b64 "admin-password" 64
+	# generate htpasswd
+	podman run --rm -it --entrypoint htpasswd 'docker.io/library/httpd:2' -Bbn admin "$(<admin-password)" > htpasswd
+)
+
 # generate Elasticsearch users with keys
 (
 	mkdir -p elasticsearch/
