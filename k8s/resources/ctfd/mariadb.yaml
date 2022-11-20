@@ -4,7 +4,7 @@
 
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   namespace: #@ namespace
   name: #@ name
@@ -12,6 +12,8 @@ metadata:
     app.kubernetes.io/name: #@ name
     app.kubernetes.io/part-of: #@ category
 spec:
+  replicas: 1
+  serviceName: #@ name
   selector:
     matchLabels:
       app.kubernetes.io/name: #@ name
@@ -44,6 +46,18 @@ spec:
             memory: "512Mi"
           requests:
             cpu: "500m"
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: managed-csi
+      resources:
+        requests:
+          storage: 2Gi
 ---
 apiVersion: v1
 kind: Service
