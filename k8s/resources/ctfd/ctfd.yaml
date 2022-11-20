@@ -57,6 +57,8 @@ spec:
               secretKeyRef:
                 name: ctfd-secrets
                 key: database-password
+      imagePullSecrets:
+      - name: registry-creds
 ---
 apiVersion: v1
 kind: Service
