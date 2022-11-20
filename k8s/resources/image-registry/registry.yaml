@@ -85,6 +85,8 @@ metadata:
   labels:
     app.kubernetes.io/name: #@ name
     app.kubernetes.io/part-of: #@ category
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 1024m
 spec:
   rules:
   - host: #@ "registry." + domain
