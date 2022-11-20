@@ -7,8 +7,23 @@
 #@ category = "registry"
 
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: #@ namespace
+  name: #@ name + "-headless"
+  labels:
+    app.kubernetes.io/name: #@ name
+    app.kubernetes.io/part-of: #@ category
+spec:
+  clusterIP: None
+  selector:
+    app: #@ name
+  ports:
+  - port: 5000
+---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   namespace: #@ namespace
   name: #@ name
@@ -16,6 +31,8 @@ metadata:
     app.kubernetes.io/name: #@ name
     app.kubernetes.io/part-of: #@ category
 spec:
+  replicas: 1
+  serviceName: #@ name + "-headless"
   selector:
     matchLabels:
       app: #@ name
@@ -31,6 +48,18 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "500m"
+        volumeMounts:
+        - name: "registry-data"
+          mountPath: /var/lib/registry
+  volumeClaimTemplates:
+  - metadata:
+      name: "registry-data"
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: managed-csi
+      resources:
+        requests:
+          storage: 4Gi
 ---
 apiVersion: v1
 kind: Service
