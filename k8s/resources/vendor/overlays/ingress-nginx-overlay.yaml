@@ -24,3 +24,15 @@ metadata:
 spec:
   #@overlay/match missing_ok=True
   loadBalancerIP: #@ data.values.pips.ingress
+
+
+#@overlay/match by=overlay.subset(resource("apps/v1", "Deployment", "ingress-nginx-controller", {"namespace": "ingress-nginx"})), expects=1
+---
+spec:
+  template:
+    spec:
+      containers:
+        #@overlay/match by=overlay.subset({"name": "controller"}), expects=1
+        - args:
+          #@overlay/append
+          - --default-ssl-certificate=default/le-ctf-2023-keypair
