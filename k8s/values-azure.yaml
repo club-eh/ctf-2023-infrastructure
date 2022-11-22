@@ -9,6 +9,5 @@ ctfd:
   vcpus: 4
 
 pips:
-  _resource_group: "Capstone"
   ingress: "20.220.138.140"
   challenges: "20.220.138.78"

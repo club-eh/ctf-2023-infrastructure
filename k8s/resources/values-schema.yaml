@@ -19,8 +19,6 @@ ctfd:
 #! Pre-allocated Public IPs
 pips:
   #@schema/validation min_len=1
-  _resource_group: ""
-  #@schema/validation min_len=1
   ingress: ""
   #@schema/validation min_len=1
   challenges: ""
