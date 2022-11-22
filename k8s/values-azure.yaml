@@ -6,8 +6,8 @@ replicas:
   ctfd: 1
 
 ctfd:
-  vcpus: 4
+  vcpus: 1
 
 pips:
-  ingress: "20.220.138.140"
-  challenges: "20.220.138.78"
+  ingress: "20.175.153.170"
+  challenges: "20.175.153.155"
