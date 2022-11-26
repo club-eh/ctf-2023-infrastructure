@@ -9,5 +9,5 @@ ctfd:
   vcpus: 1
 
 pips:
-  ingress: "20.175.153.170"
-  challenges: "20.175.153.155"
+  ingress: "20.200.79.142"
+  challenges: "20.200.73.200"
