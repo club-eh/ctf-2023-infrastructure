@@ -30,9 +30,10 @@ spec:
             _: #@ template.replace(common_labels)
         spec:
           #! https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-virtual-memory.html
-          #!initContainers:
-          #!  - name: sysctl
-          #!    securityContext:
-          #!      privileged: true
-          #!      runAsUser: 0
-          #!    command: ["sh", "-c", "sysctl -w vm.max_map_count=262144"]
+          #! syscctl init container, not needed on Azure if nodes are properly configured
+          initContainers:
+            - name: sysctl
+              securityContext:
+                privileged: true
+                runAsUser: 0
+              command: ["sh", "-c", "sysctl -w vm.max_map_count=262144"]
