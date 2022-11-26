@@ -2,13 +2,19 @@
 
 ## Preface
 
-You're going to want a Unix environment: WSL, MacOS, and Linux should all work fine, but I can't promise you'll have a good time with Windows.
-I'm assuming you already have `git clone`ed the repo at `https://github.com/club-eh/ctf-2023-infra-2-wip` into a local directory named `infra`.
+You're going to want a Unix environment: WSL, MacOS, and Linux should all work fine, but I can't promise you'll have a good time with Windows.  
+I'm assuming you already have `git clone`ed the repo at `https://github.com/club-eh/ctf-2023-infra-2-wip` into a local directory (called `infra` in this document).
 
 Requirements for generally doing anything are [Installing Tools](#installing-tools), [First-time setup](#first-time-setup), and then [Per-cluster setup](#per-cluster-setup).
 
 
 ## Installing tools
+
+### git-crypt
+
+You can get the program here: [https://github.com/AGWA/git-crypt](https://github.com/AGWA/git-crypt)
+
+After the program is installed, `cd` to your local copy of the repo, and run `git-crypt unlock` to decrypt the secrets.
 
 ### Kubectl
 
