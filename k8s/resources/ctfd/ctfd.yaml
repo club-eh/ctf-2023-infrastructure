@@ -38,8 +38,6 @@ spec:
           limits:
             cpu: #@ data.values.ctfd.vcpus
             memory: #@ str(data.values.ctfd.vcpus * data.values.ctfd.memory) + "Mi"
-          requests:
-            cpu: #@ data.values.ctfd.vcpus / 2
         env:
           - name: SECRET_KEY
             valueFrom:
