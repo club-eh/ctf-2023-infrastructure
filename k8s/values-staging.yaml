@@ -6,4 +6,4 @@ replicas:
   ctfd: 2
 
 ctfd:
-  vcpus: 4
+  vcpus: 2
