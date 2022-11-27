@@ -12,9 +12,9 @@ replicas:
 #! CTFd-specific configuration
 ctfd:
   #! Number of vCPUs per CTFd instance (worker count is auto-derived from this value)
-  vcpus: 4
+  vcpus: 2
   #! Amount of RAM (in MiB) to dedicate per vCPU
-  memory: 96
+  memory: 384
 
 #! Pre-allocated Public IPs
 pips:
