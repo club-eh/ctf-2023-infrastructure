@@ -40,7 +40,9 @@ gen_rand_file_b64() {
 	# generate admin password
 	gen_rand_file_b64 "admin-password" 64
 	# generate htpasswd
-	podman run --rm -it --entrypoint htpasswd 'docker.io/library/httpd:2' -Bbn admin "$(<admin-password)" > htpasswd
+	if [[ ! -f htpasswd ]]; then
+		podman run --rm -it --entrypoint htpasswd 'docker.io/library/httpd:2' -Bbn admin "$(<admin-password)" > htpasswd
+	fi
 )
 
 # generate Elasticsearch users with keys
