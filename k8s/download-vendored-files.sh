@@ -8,7 +8,7 @@ set -e
 VERSION_INGRESS_NGINX="1.5.1"
 VERSION_KUBE_DASHBOARD="2.7.0"
 VERSION_ECK="2.5.0"
-VERSION_PROM_OPERATOR="0.61.1"
+#VERSION_PROM_OPERATOR="0.61.1"
 
 
 dl() { wget -nv --show-progress "$@"; }
@@ -27,4 +27,4 @@ dl -O resources/vendor/kube-dashboard.yaml "https://raw.githubusercontent.com/ku
 dl -O resources/vendor/eck-crds.yaml "https://download.elastic.co/downloads/eck/${VERSION_ECK}/crds.yaml"
 dl -O resources/vendor/eck-operator.yaml "https://download.elastic.co/downloads/eck/${VERSION_ECK}/operator.yaml"
 
-dl -O resources/vendor/prometheus-operator.yaml "https://github.com/prometheus-operator/prometheus-operator/releases/download/v${VERSION_PROM_OPERATOR}/bundle.yaml"
+#dl -O resources/vendor/prometheus-operator.yaml "https://github.com/prometheus-operator/prometheus-operator/releases/download/v${VERSION_PROM_OPERATOR}/bundle.yaml"
