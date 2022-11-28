@@ -1,0 +1,6 @@
+# Namespace for OAuth2 Proxy and related resources
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: auth

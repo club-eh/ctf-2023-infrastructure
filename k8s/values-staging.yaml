@@ -1,6 +1,7 @@
 #@data/values
 ---
 domain: "ctf-2023-staging.clubeh.ca"
+internal_domain: "admin.ctf-2023-staging.clubeh.ca"
 
 replicas:
   ctfd: 2

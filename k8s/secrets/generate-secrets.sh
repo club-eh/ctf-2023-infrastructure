@@ -45,6 +45,17 @@ gen_rand_file_b64() {
 	fi
 )
 
+# generate OAuth2-proxy secrets
+(
+	mkdir -p oauth2-proxy/
+	cd oauth2-proxy/
+
+	# generate cookie signing key (length-sensitive)
+	if [[ ! -f "cookie-signing-key" ]]; then
+		gen_rand_b64 32 | head -c32 > "cookie-signing-key"
+	fi
+)
+
 # generate Elasticsearch users with keys
 (
 	mkdir -p elasticsearch/

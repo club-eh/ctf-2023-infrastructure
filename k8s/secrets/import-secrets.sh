@@ -14,6 +14,9 @@ for namespace in ctfd challenges; do
 	kubectl create secret docker-registry -n ${namespace} registry-creds --docker-server="registry.ctf-2023.clubeh.ca" --docker-username=admin --docker-password=$(<registry/admin-password)
 done
 
+# import OAuth2-proxy secrets
+kubectl create secret generic -n "auth" "oauth2-proxy-secrets" --from-file="./oauth2-proxy/"
+
 # import Elasticsearch users
 for user in "fluentbit"; do
 	kubectl create secret generic -n "monitoring" "elasticsearch-user-${user}" --type='kubernetes.io/basic-auth' --from-env-file=elasticsearch/fluentbit

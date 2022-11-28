@@ -5,6 +5,10 @@
 #@schema/validation min_len=1
 domain: ""
 
+#! Base domain name for all protected (internal) endpoints
+#@schema/validation min_len=1
+internal_domain: ""
+
 #! Pod replica counts
 replicas:
   ctfd: 1
