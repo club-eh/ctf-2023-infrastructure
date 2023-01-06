@@ -36,8 +36,10 @@ spec:
         image: #@ registry + "/infra/ctfd:latest"
         resources:
           limits:
-            cpu: #@ data.values.ctfd.vcpus
+            cpu: #@ data.values.ctfd.vcpus * 1.2
             memory: #@ str(data.values.ctfd.vcpus * data.values.ctfd.memory) + "Mi"
+          requests:
+            cpu: #@ data.values.ctfd.vcpus
         env:
           - name: SECRET_KEY
             valueFrom:
@@ -45,7 +47,8 @@ spec:
                 name: ctfd-secrets
                 key: ctfd-secret-key
           - name: WORKERS
-            value: #@ str( data.values.ctfd.vcpus * 2 + 1 )
+            #!value: #@ str( data.values.ctfd.vcpus * 2 + 1 )
+            value: "2"
           - name: REDIS_URL
             value: "redis://redis:6379"
           - name: DATABASE_URL
