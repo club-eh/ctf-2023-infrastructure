@@ -26,7 +26,6 @@ spec:
     spec:
       containers:
       - name: #@ name
-        #! TODO: switch to a non-Ubuntu-based image?
         image: "docker.io/library/mariadb:10.9"
         env:
           - name: MARIADB_RANDOM_ROOT_PASSWORD
