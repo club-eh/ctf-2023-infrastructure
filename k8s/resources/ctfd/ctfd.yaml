@@ -51,8 +51,8 @@ spec:
             value: "2"
           - name: REDIS_URL
             value: "redis://redis:6379"
-          - name: DATABASE_URL
-            value: "mysql+pymysql://ctfd:{PASSWORD}@mariadb.ctfd/ctfd"
+          - name: DATABASE_HOST
+            value: "mariadb.ctfd"
           - name: DATABASE_PASSWORD
             valueFrom:
               secretKeyRef:

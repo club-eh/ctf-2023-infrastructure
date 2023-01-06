@@ -7,12 +7,6 @@ SECRET_KEY=${SECRET_KEY:-}
 ACCESS_LOG=${ACCESS_LOG:-"-"}
 ERROR_LOG=${ERROR_LOG:-"-"}
 
-# interpolate database password into URL if provided
-if [[ -n "$DATABASE_PASSWORD" ]] && [[ -n "$DATABASE_URL" ]]; then
-	DATABASE_URL="${DATABASE_URL/\{PASSWORD\}/$DATABASE_PASSWORD}"
-fi
-
-
 cd /app
 
 # Check that a .ctfd_secret_key file or SECRET_KEY envvar is set
