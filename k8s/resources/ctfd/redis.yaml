@@ -25,10 +25,14 @@ spec:
       containers:
       - name: #@ name
         image: "docker.io/library/redis:7-alpine"
+        args:
+        - --maxmemory 768000000
+        - --maxmemory-policy volatile-lru
+        - --save ""
         resources:
           limits:
-            cpu: "1000m"
-            memory: "256Mi"
+            cpu: "1200m"
+            memory: "1024Mi"
 ---
 apiVersion: v1
 kind: Service
