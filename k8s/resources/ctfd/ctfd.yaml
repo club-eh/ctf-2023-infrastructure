@@ -46,6 +46,8 @@ spec:
               secretKeyRef:
                 name: ctfd-secrets
                 key: ctfd-secret-key
+          - name: REVERSE_PROXY
+            value: "True"
           - name: WORKERS
             #!value: #@ str( data.values.ctfd.vcpus * 2 + 1 )
             value: "2"
