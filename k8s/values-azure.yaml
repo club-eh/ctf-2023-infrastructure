@@ -7,5 +7,5 @@ replicas:
   ctfd: 4
 
 pips:
-  ingress: "20.200.79.142"
-  challenges: "20.200.73.200"
+  ingress: "20.220.40.128"
+  challenges: "20.220.41.23"
