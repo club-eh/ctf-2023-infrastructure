@@ -89,6 +89,8 @@ metadata:
     app.kubernetes.io/part-of: #@ category
   annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    #! allow for large uploads to CTFd
+    nginx.ingress.kubernetes.io/proxy-body-size: 512m
 spec:
   rules:
   - host: #@ domain
