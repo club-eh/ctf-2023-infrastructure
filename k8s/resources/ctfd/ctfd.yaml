@@ -103,3 +103,26 @@ spec:
             name: #@ name
             port: 
               number: 80
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  namespace: #@ namespace
+  name: #@ name
+  labels:
+    app.kubernetes.io/name: #@ name
+    app.kubernetes.io/part-of: #@ category
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: #@ name
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
