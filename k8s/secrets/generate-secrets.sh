@@ -30,6 +30,10 @@ gen_rand_file_b64() {
 	gen_rand_file_b64 "ctfd-secret-key" 64
 	# MariaDB database password
 	gen_rand_file_b64 "database-password" 64
+	# Minio root password
+	gen_rand_file_b64 "minio-root-password" 64
+	# Minio CTFd secret key (*not* automatically added to Minio!)
+	gen_rand_file_b64 "minio-ctfd-secret-key" 64
 )
 
 # generate registry secrets

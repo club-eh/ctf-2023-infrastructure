@@ -60,6 +60,19 @@ spec:
               secretKeyRef:
                 name: ctfd-secrets
                 key: database-password
+          - name: UPLOAD_PROVIDER
+            value: s3
+          - name: AWS_ACCESS_KEY_ID
+            value: "ctfd"
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: ctfd-secrets
+                key: minio-ctfd-secret-key
+          - name: AWS_S3_BUCKET
+            value: "ctfd"
+          - name: AWS_S3_ENDPOINT_URL
+            value: #@ "https://minio." + domain
       imagePullSecrets:
       - name: registry-creds
 ---
