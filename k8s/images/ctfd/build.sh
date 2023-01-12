@@ -21,5 +21,12 @@ git -C ctfd/ pull
 # update CTFd theme repo
 git -C ctfd/CTFd/themes/ctfd-theme pull
 
+# build theme
+(
+	cd ctfd/CTFd/themes/ctfd-theme
+	yarn install
+	yarn run build
+)
+
 # build container image
 podman build -t ctf2023_ctfd -f Containerfile .
