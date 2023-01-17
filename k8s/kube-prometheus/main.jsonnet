@@ -17,6 +17,13 @@ local kp =
         namespace: 'monitoring',
       },
     },
+    prometheus+:: {
+      prometheus+: {
+        spec+: {
+          scrapeInterval: '15s',
+        },
+      },
+    },
   };
 
 { 'setup/0namespace-namespace': kp.kubePrometheus.namespace } +

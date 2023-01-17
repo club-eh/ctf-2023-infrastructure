@@ -50,6 +50,7 @@
       },
       "ruleNamespaceSelector": { },
       "ruleSelector": { },
+      "scrapeInterval": "15s",
       "securityContext": {
          "fsGroup": 2000,
          "runAsNonRoot": true,
