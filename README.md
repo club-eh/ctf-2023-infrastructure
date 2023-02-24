@@ -45,3 +45,9 @@ It's likely possible to partially (or even entirely) factor out the environment-
 However, given our limited time and resources, we figured it would not be worth the additional time and effort, and opted instead to just test our infra in Azure.
 
 Under normal circumstances, this would've inflated our costs considerably; thankfully for us, our corporate sponsor covered all our costs in Azure.
+
+
+## License
+
+The contents of this repository are provided under the terms of the MIT license.  
+See [LICENSE.txt](LICENSE.txt) for details.
